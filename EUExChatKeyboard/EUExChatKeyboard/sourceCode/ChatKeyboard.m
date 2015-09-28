@@ -20,6 +20,12 @@
 #define UEX_SCREENWIDTH (isSysVersionAbove7_0?[UIScreen mainScreen].bounds.size.width:[UIScreen mainScreen].applicationFrame.size.width)
 #define UEX_SCREENHEIGHT (isSysVersionAbove7_0?[UIScreen mainScreen].bounds.size.height:[UIScreen mainScreen].applicationFrame.size.height)
 
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
+
 @implementation ChatKeyboard
 
 -(instancetype)initWithUexobj:(EUExChatKeyboard *)uexObj{
@@ -143,11 +149,13 @@
 }
 
 -(void)sendButtonDidClicked:(id)sender {
+    
     [self didSendTextAction:self.messageToolView.messageInputTextView];
     [self messageViewAnimationWithMessageRect:CGRectZero
                      withMessageInputViewRect:self.messageToolView.frame
                                   andDuration:0.25
                                      andState:ZBMessageViewStateShowNone];
+    
 }
 
 - (void)shareShareMeun
@@ -182,26 +190,25 @@
 
 - (void)changeWebView:(float)height {
     
-    
-    CGRect tempRect = self.uexObj.meBrwView.scrollView.frame;
-    tempRect.size.height = CGRectGetMinY(self.messageToolView.frame);
-    self.uexObj.meBrwView.scrollView.frame = tempRect;
-    
     float yy = self.uexObj.meBrwView.frame.origin.y;
     
-    if (CGRectGetMidY(self.messageToolView.frame) < yy + height) {
-        
-        
+    CGRect tempRect = self.uexObj.meBrwView.scrollView.frame;
+    tempRect.size.height = CGRectGetMinY(self.messageToolView.frame) - yy;
+    self.uexObj.meBrwView.scrollView.frame = tempRect;
+    
+    
+    NSLog(@"%f,%d",[[UIScreen mainScreen] bounds].size.height,IS_IPHONE);
+    
+    
+    //if (IS_IPHONE_6P) {
+        [self.uexObj.meBrwView.scrollView setContentOffset:CGPointMake(0, 0)];
+    //}
+    
+    if (CGRectGetMinY(self.messageToolView.frame) < yy + height) {
         
         [self.uexObj.meBrwView.scrollView setContentOffset:CGPointMake(0, yy + height - CGRectGetMinY(self.messageToolView.frame))];
         
-        
-        
-        
     }
-    
-    
-    
     
 }
 
@@ -209,9 +216,9 @@
 - (void)messageViewAnimationWithMessageRect:(CGRect)rect  withMessageInputViewRect:(CGRect)inputViewRect andDuration:(double)duration andState:(ZBMessageViewState)state{
     
     //if (state != ZBMessageViewStateShowNone) {
-        duration = 0.0;
+        //duration = 0.0;
     //} else {
-     //   duration += 0.1;
+        duration += 0.1;
     //}
     
     [UIView animateWithDuration:duration animations:^{
@@ -274,7 +281,7 @@
     
     if (CGRectGetHeight(rect) > 0) {
         status = @"1";
-    } else{
+    } else {
         if (self.uexObj.meBrwView.scrollView.frame.size.height >= self.uexObj.meBrwView.scrollView.contentOffset.y) {
             [self.uexObj.meBrwView.scrollView setContentOffset:CGPointMake(0, 0)];
         } else {
