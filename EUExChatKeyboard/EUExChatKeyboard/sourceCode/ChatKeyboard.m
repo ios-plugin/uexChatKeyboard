@@ -150,10 +150,11 @@
 
 -(void)sendButtonDidClicked:(id)sender {
     [self didSendTextAction:self.messageToolView.messageInputTextView];
-    [self messageViewAnimationWithMessageRect:CGRectZero
-                     withMessageInputViewRect:self.messageToolView.frame
-                                  andDuration:0.25
-                                     andState:ZBMessageViewStateShowNone];
+//    [self messageViewAnimationWithMessageRect:CGRectZero
+//                     withMessageInputViewRect:self.messageToolView.frame
+//                                  andDuration:0.25
+//                                     andState:ZBMessageViewStateShowNone];
+    
 }
 
 - (void)shareShareMeun
@@ -192,7 +193,10 @@
     CGRect tempRect = self.uexObj.meBrwView.scrollView.frame;
     tempRect.size.height = CGRectGetMinY(self.messageToolView.frame) - yy;
     self.uexObj.meBrwView.scrollView.frame = tempRect;
-    
+    self.uexObj.meBrwView.scrollView.bounces = NO;
+    self.uexObj.meBrwView.scrollView.alwaysBounceVertical = NO;
+    self.uexObj.meBrwView.scrollView.alwaysBounceHorizontal = NO;
+    //bounces
     
     [self.uexObj.meBrwView.scrollView setContentOffset:CGPointMake(0, 0)];
     
@@ -210,11 +214,10 @@
     //if (state != ZBMessageViewStateShowNone) {
         //duration = 0.0;
     //} else {
-        duration += 0.1;
+//        duration += 0.1;
     //}
-    
     [UIView animateWithDuration:duration animations:^{
-        
+    
         CGFloat offsetHeight=self.bottomOffset;
         if(CGRectGetHeight(rect)>offsetHeight){
             offsetHeight=CGRectGetHeight(rect);
@@ -227,10 +230,7 @@
         tempRect.size.height = CGRectGetMinY(self.messageToolView.frame)+self.bottomOffset+CGRectGetHeight(inputViewRect);
 
         self.uexObj.meBrwView.scrollView.frame = tempRect;
-        
-        
-        
-        
+
         switch (state) {
                 
             case ZBMessageViewStateShowFace:
@@ -290,7 +290,8 @@
     }
     
     NSDictionary * jsDic = [NSDictionary dictionaryWithObject:status forKey:@"status"];
-    NSString *jsStr = [NSString stringWithFormat:@"if(uexChatKeyboard.onKeyBoardShow!=null){uexChatKeyboard.onKeyBoardShow(\'%@\');}", [jsDic JSONFragment]];
+    NSString *jsStr = [NSString stringWithFormat:@"if(uexChatKeyboard.onKeyBoardShow!=null){uexChatKeyboard.onKeyBoardShow(\'%@\');}",
+                       [jsDic JSONFragment]];
     
     //if (![status isEqualToString:_keyboardStatus]) {
         //_keyboardStatus = status;
@@ -457,11 +458,10 @@
     
     NSString * cbjson = [cbDic objectForKey:@"cbKey"];
     
-    
     [self.uexObj.meBrwView stringByEvaluatingJavaScriptFromString:cbjson];
     
     [self inputTextViewDidChange:messageInputTextView];
-    [messageInputTextView resignFirstResponder];
+//    [messageInputTextView resignFirstResponder];
 }
 
 

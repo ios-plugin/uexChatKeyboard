@@ -124,7 +124,6 @@
         
         
         [_chatKeyboard open];
-        
         _tapGR = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard:)];
         
         [self.meBrwView addGestureRecognizer:_tapGR];

@@ -355,6 +355,11 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = AppCan.can;
+				TargetAttributes = {
+					F769E3031AAE81AD009A471B = {
+						DevelopmentTeam = LY2XZEVPKR;
+					};
+				};
 			};
 			buildConfigurationList = F769E2FF1AAE81AD009A471B /* Build configuration list for PBXProject "uexChatKeyboard" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -420,7 +425,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Wang GuoChun (GJL3LN9D59)";
+				CODE_SIGN_IDENTITY = "Mac Developer: 2464556998@qq.com (TP92M9L526)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/uexChatKeyboard";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
@@ -461,7 +466,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Wang GuoChun (GJL3LN9D59)";
+				CODE_SIGN_IDENTITY = "Mac Developer: 2464556998@qq.com (TP92M9L526)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/uexChatKeyboard";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
@@ -484,7 +489,8 @@
 		F769E3281AAE81AD009A471B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: leilei xu (T8E4RVNP82)";
+				CODE_SIGN_IDENTITY = "Mac Developer: 2464556998@qq.com (TP92M9L526)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Mac Developer: 2464556998@qq.com (TP92M9L526)";
 				DSTROOT = /tmp/uexChatKeyboard.dst;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -496,6 +502,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -503,7 +510,8 @@
 		F769E3291AAE81AD009A471B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: leilei xu (T8E4RVNP82)";
+				CODE_SIGN_IDENTITY = "Mac Developer: 2464556998@qq.com (TP92M9L526)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Mac Developer: 2464556998@qq.com (TP92M9L526)";
 				DSTROOT = /tmp/uexChatKeyboard.dst;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -515,6 +523,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
