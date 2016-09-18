@@ -585,12 +585,17 @@
 }
 
 - (void)insertAfterAt:(NSString *)str{
-    if (self.atPosition == NSNotFound) {
+    if (self.atPosition == NSNotFound || !str || str.length == 0) {
         return;
     }
-    NSMutableString *text = [self.messageToolView.messageInputTextView.text mutableCopy];
+    UITextView *textView = self.messageToolView.messageInputTextView;
+    
+    NSMutableString *text = [textView.text mutableCopy];
+    NSRange range = textView.selectedRange;
+    NSRange newRange = NSMakeRange(range.location + str.length, range.length);
     [text insertString:str atIndex:self.atPosition];
-    [self.messageToolView.messageInputTextView setText:text];
+    [textView setText:text];
+    [textView setSelectedRange:newRange];
 }
 
 
