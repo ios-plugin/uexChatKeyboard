@@ -61,4 +61,7 @@ typedef NS_ENUM(NSInteger,ZBMessageViewState) {
 -(void)close;
 - (void)hideKeyboard;
 - (void)changeWebView:(float)height;
+
+
+- (void)insertAfterAt:(NSString *)str;
 @end

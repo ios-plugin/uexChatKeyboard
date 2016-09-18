@@ -61,6 +61,13 @@
 
 @end
 
+
+@interface ChatKeyboard()
+@property (nonatomic,strong)NSString *lastChangeText;
+@property (nonatomic,assign)NSInteger atPosition;
+
+@end
+
 @implementation ChatKeyboard
 
 -(instancetype)initWithUexobj:(EUExChatKeyboard *)uexObj{
@@ -474,6 +481,10 @@
 //        self.previousTextViewContentHeight = messageInputTextView.contentSize.height;
 //        _isInit = NO;
 //    }
+    
+    [self inputTextViewCheckOnAt:messageInputTextView];
+    
+    
     if (!self.previousTextViewContentHeight)
     {
         self.previousTextViewContentHeight = messageInputTextView.contentSize.height;
@@ -550,9 +561,39 @@
 }
 
 
+#pragma mark - onAt
 
 
-#pragma end
+- (void)inputTextViewCheckOnAt:(ZBMessageTextView *)messageInputTextView{
+    self.atPosition = NSNotFound;
+    NSString *lastChangeText = self.lastChangeText;
+    NSString *currentText = messageInputTextView.text;
+    self.lastChangeText = currentText;
+    if (currentText.length <= lastChangeText.length) {
+        return;
+    }
+    NSRange range = messageInputTextView.selectedRange;
+    if (range.location == NSNotFound || range.location == 0) {
+        return;
+    }
+    
+    NSString *lastChar = [currentText substringWithRange:NSMakeRange(range.location - 1, 1)];
+    if ([lastChar isEqual:@"@"]) {
+        self.atPosition = range.location;
+        [EUtility brwView:self.uexObj.meBrwView evaluateScript:@"if(uexChatKeyboard.onAt){uexChatKeyboard.onAt();}"];
+    }
+}
+
+- (void)insertAfterAt:(NSString *)str{
+    if (self.atPosition == NSNotFound) {
+        return;
+    }
+    NSMutableString *text = [self.messageToolView.messageInputTextView.text mutableCopy];
+    [text insertString:str atIndex:self.atPosition];
+    [self.messageToolView.messageInputTextView setText:text];
+}
+
+
 #pragma mark - ZBMessageFaceViewDelegate
 - (void)SendTheFaceStr:(NSString *)faceStr isDelete:(BOOL)dele
 {

@@ -292,4 +292,23 @@
     [self clean];
 }
 
+- (void)insertAfterAt:(NSMutableArray *)inArguments{
+    if([inArguments count] < 1){
+        return;
+    }
+    id data = inArguments[0];
+    NSString *str = nil;
+    if ([data isKindOfClass:[NSString class]]) {
+        str = data;
+    }
+    if ([data isKindOfClass:[NSNumber class]]) {
+        str = [data stringValue];
+    }
+    if (!str) {
+        return;
+    }
+    [self.chatKeyboard insertAfterAt:str];
+
+}
+
 @end
