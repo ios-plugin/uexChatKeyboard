@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger,ZBMessageViewState) {
 @property (nonatomic,strong) NSString * facePath;
 
 @property (nonatomic,assign)CGFloat bottomOffset;
-
+@property (nonatomic,strong)NSArray<NSString *> *keywords;
 
 
 -(instancetype)initWithUexobj:(EUExChatKeyboard *)uexObj;
@@ -63,5 +63,5 @@ typedef NS_ENUM(NSInteger,ZBMessageViewState) {
 - (void)changeWebView:(float)height;
 
 
-- (void)insertAfterAt:(NSString *)str;
+- (void)insertString:(NSString *)str afterKeyword:(NSString *)keyword isReplacingKeyword:(BOOL)isReplacingKeyword;
 @end

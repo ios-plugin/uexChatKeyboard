@@ -162,6 +162,11 @@
         if([xmlDic objectForKey:@"bottom"]){
             _chatKeyboard.bottomOffset=[[xmlDic objectForKey:@"bottom"] floatValue];
         }
+        id keywords = xmlDic[@"keywords"];
+        if (keywords && [keywords isKindOfClass:[NSArray class]]) {
+            self.chatKeyboard.keywords = keywords;
+        }
+        
         
         [_chatKeyboard open];
         
@@ -292,23 +297,20 @@
     [self clean];
 }
 
-- (void)insertAfterAt:(NSMutableArray *)inArguments{
+- (void)insertTextByKeyword:(NSMutableArray *)inArguments{
     if([inArguments count] < 1){
         return;
     }
-    id data = inArguments[0];
-    NSString *str = nil;
-    if ([data isKindOfClass:[NSString class]]) {
-        str = data;
-    }
-    if ([data isKindOfClass:[NSNumber class]]) {
-        str = [data stringValue];
-    }
-    if (!str) {
+    id info = [inArguments[0] JSONValue];
+    if (!info || ![info isKindOfClass:[NSDictionary class]]) {
         return;
     }
-    [self.chatKeyboard insertAfterAt:str];
-
+    NSString * keyword = info[@"keyword"];
+    NSString * insertText = info[@"insertText"];
+    NSNumber * isReplaceKeywordFlag = info[@"isReplaceKeyword"];
+    BOOL isReplaceKeyword = isReplaceKeywordFlag ? isReplaceKeywordFlag.integerValue == 1 : NO;
+    [self.chatKeyboard insertString:insertText afterKeyword:keyword isReplacingKeyword:isReplaceKeyword];
+    
 }
 
 @end

@@ -64,7 +64,7 @@
 
 @interface ChatKeyboard()
 @property (nonatomic,strong)NSString *lastChangeText;
-@property (nonatomic,assign)NSInteger atPosition;
+@property (nonatomic,assign)NSInteger keywordPosition;
 
 @end
 
@@ -482,7 +482,7 @@
 //        _isInit = NO;
 //    }
     
-    [self inputTextViewCheckOnAt:messageInputTextView];
+    [self inputTextViewCheckKeywords:messageInputTextView];
     
     
     if (!self.previousTextViewContentHeight)
@@ -561,11 +561,11 @@
 }
 
 
-#pragma mark - onAt
+#pragma mark - CheckKeywords
 
 
-- (void)inputTextViewCheckOnAt:(ZBMessageTextView *)messageInputTextView{
-    self.atPosition = NSNotFound;
+- (void)inputTextViewCheckKeywords:(ZBMessageTextView *)messageInputTextView{
+    self.keywordPosition = NSNotFound;
     NSString *lastChangeText = self.lastChangeText;
     NSString *currentText = messageInputTextView.text;
     self.lastChangeText = currentText;
@@ -576,25 +576,52 @@
     if (range.location == NSNotFound || range.location == 0) {
         return;
     }
-    
-    NSString *lastChar = [currentText substringWithRange:NSMakeRange(range.location - 1, 1)];
-    if ([lastChar isEqual:@"@"]) {
-        self.atPosition = range.location;
-        [EUtility brwView:self.uexObj.meBrwView evaluateScript:@"if(uexChatKeyboard.onAt){uexChatKeyboard.onAt();}"];
+    for (NSString * keyword in self.keywords){
+        if (![keyword isKindOfClass:[NSString class]]) {
+            continue;
+        }
+        NSUInteger length = keyword.length;
+        if (range.location < length) {
+            continue;
+        }
+        NSString *suffixString = [currentText substringWithRange:NSMakeRange(range.location - length, length)];
+        if ([suffixString isEqualToString:keyword]) {
+            self.keywordPosition = range.location;
+            NSString *jsScript = [NSString stringWithFormat:@"if(uexChatKeyboard.onInputKeyword){uexChatKeyboard.onInputKeyword(%@)}",@{@"keyword": keyword}.JSONFragment.JSONFragment];
+            [EUtility brwView:self.uexObj.meBrwView evaluateScript:jsScript];
+
+            return;
+        }
     }
+    
+    
+    
 }
 
-- (void)insertAfterAt:(NSString *)str{
-    if (self.atPosition == NSNotFound || !str || str.length == 0) {
+- (void)insertString:(NSString *)str afterKeyword:(NSString *)keyword isReplacingKeyword:(BOOL)isReplacingKeyword{
+    if (self.keywordPosition == NSNotFound || !str || str.length == 0 || !keyword || keyword.length == 0) {
         return;
     }
     UITextView *textView = self.messageToolView.messageInputTextView;
     
-    NSMutableString *text = [textView.text mutableCopy];
+    NSString *text = textView.text;
+    NSMutableString *subString = [[text substringToIndex:self.keywordPosition] mutableCopy];
+    if (![subString hasSuffix:keyword]) {
+        NSLog(@"insert string failed; keyword invalid");
+        return;
+    }
+    NSInteger lengthChange = 0;
+    if (isReplacingKeyword) {
+        [subString deleteCharactersInRange:NSMakeRange(subString.length - keyword.length, keyword.length)];
+        lengthChange -= keyword.length;
+    }
+    [subString appendString:str];
+    lengthChange += str.length;
+    
     NSRange range = textView.selectedRange;
-    NSRange newRange = NSMakeRange(range.location + str.length, range.length);
-    [text insertString:str atIndex:self.atPosition];
-    [textView setText:text];
+    NSRange newRange = NSMakeRange(range.location + lengthChange, range.length);
+    NSString *newString = [subString stringByAppendingString:[text substringFromIndex:self.keywordPosition]];
+    [textView setText:newString];
     [textView setSelectedRange:newRange];
 }
 

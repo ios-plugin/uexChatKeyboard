@@ -6,6 +6,6 @@
         <method name="getInputBarHeight"></method>
         <method name="hideKeyboard"></method>
         <method name="changeWebViewFrame"></method>
-        <method name="insertAfterAt"></method>
+        <method name="insertTextByKeyword"></method>
     </plugin>
 </uexplugins>
