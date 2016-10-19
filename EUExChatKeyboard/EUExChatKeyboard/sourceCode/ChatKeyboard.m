@@ -587,7 +587,7 @@
         NSString *suffixString = [currentText substringWithRange:NSMakeRange(range.location - length, length)];
         if ([suffixString isEqualToString:keyword]) {
             self.keywordPosition = range.location;
-            NSString *jsScript = [NSString stringWithFormat:@"if(uexChatKeyboard.onInputKeyword){uexChatKeyboard.onInputKeyword(%@)}",@{@"keyword": keyword}.JSONFragment.JSONFragment];
+            NSString *jsScript = [NSString stringWithFormat:@"if(uexChatKeyboard.onInputKeyword){uexChatKeyboard.onInputKeyword(%@)}",@{@"keyword": keyword}.JSONFragment];
             [EUtility brwView:self.uexObj.meBrwView evaluateScript:jsScript];
 
             return;
