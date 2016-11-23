@@ -11,7 +11,7 @@
 
 #define NumPerLine 7
 #define Lines    3
-#define FaceSize  30
+#define FaceSize  24
 /*
 ** 两边边缘间隔
  */

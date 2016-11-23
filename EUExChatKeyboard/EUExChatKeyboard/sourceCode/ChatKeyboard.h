@@ -11,10 +11,8 @@
 #import "ZBMessageInputView.h"
 #import "ZBMessageShareMenuView.h"
 #import "ZBMessageManagerFaceView.h"
-#import "EBrowserView.h"
 #import "ZBMessage.h"
 #import "ChatKeyboardUtility.h"
-#import "JSON.h"
 #import "ACPVoiceActionView.h"
 
 typedef NS_ENUM(NSInteger,ZBMessageViewState) {
@@ -52,6 +50,8 @@ typedef NS_ENUM(NSInteger,ZBMessageViewState) {
 
 @property (nonatomic,strong) NSString * facePath;
 
+@property (nonatomic,copy) NSString * keyboardStatus;
+
 @property (nonatomic,assign)CGFloat bottomOffset;
 @property (nonatomic,strong)NSArray<NSString *> *keywords;
 
@@ -61,7 +61,5 @@ typedef NS_ENUM(NSInteger,ZBMessageViewState) {
 -(void)close;
 - (void)hideKeyboard;
 - (void)changeWebView:(float)height;
-
-
 - (void)insertString:(NSString *)str afterKeyword:(NSString *)keyword isReplacingKeyword:(BOOL)isReplacingKeyword;
 @end
