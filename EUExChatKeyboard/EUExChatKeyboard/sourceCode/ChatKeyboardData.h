@@ -32,6 +32,8 @@
 @property (nonatomic,assign) float sendBtnTextSize;
 @property (nonatomic,strong) UIColor * sendBtnTextColor;
 
+@property (nonatomic,assign) BOOL isShowVoice;
+
 +(ChatKeyboardData *)sharedChatKeyboardData;
 
 @end

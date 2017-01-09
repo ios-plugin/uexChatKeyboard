@@ -210,16 +210,18 @@
     CGFloat buttonSize = [ZBMessageInputView textViewLineHeight];
     
     // 发送语音
-    self.voiceChangeButton = [self createButtonWithImage:[UIImage imageWithContentsOfFile:[UEX_PLUGIN_BUNDLE pathForResource:@"messageInputViewResource/ToolViewInputVoice_ios7@2x" ofType:@"png"]] HLImage:nil];
-    [self.voiceChangeButton setImage:[UIImage imageWithContentsOfFile:[UEX_PLUGIN_BUNDLE pathForResource:@"messageInputViewResource/ToolViewKeyboard_ios7@2x" ofType:@"png"]]
-                            forState:UIControlStateSelected];
-    [self.voiceChangeButton addTarget:self
-                               action:@selector(messageStyleButtonClicked:)
-                     forControlEvents:UIControlEventTouchUpInside];
-    self.voiceChangeButton.tag = 0;
-    
-    [self addSubview:self.voiceChangeButton];
-    self.voiceChangeButton.frame = CGRectMake(horizontalPadding,verticalPadding,buttonSize,buttonSize);
+    if([ChatKeyboardData sharedChatKeyboardData].isShowVoice){
+        self.voiceChangeButton = [self createButtonWithImage:[UIImage imageWithContentsOfFile:[UEX_PLUGIN_BUNDLE pathForResource:@"messageInputViewResource/ToolViewInputVoice_ios7@2x" ofType:@"png"]] HLImage:nil];
+        [self.voiceChangeButton setImage:[UIImage imageWithContentsOfFile:[UEX_PLUGIN_BUNDLE pathForResource:@"messageInputViewResource/ToolViewKeyboard_ios7@2x" ofType:@"png"]]
+                                forState:UIControlStateSelected];
+        [self.voiceChangeButton addTarget:self
+                                   action:@selector(messageStyleButtonClicked:)
+                         forControlEvents:UIControlEventTouchUpInside];
+        self.voiceChangeButton.tag = 0;
+        
+        [self addSubview:self.voiceChangeButton];
+        self.voiceChangeButton.frame = CGRectMake(horizontalPadding,verticalPadding,buttonSize,buttonSize);
+    }
     
     
     // 允许发送多媒体消息，为什么不是先放表情按钮呢？因为布局的需要！
@@ -282,17 +284,24 @@
     {
         case ZBMessageInputViewStyleQuasiphysical:
         {
-            self.holdDownButton.frame = CGRectMake(horizontalPadding + buttonSize +5.0f,
+            if([ChatKeyboardData sharedChatKeyboardData].isShowVoice){
+                self.holdDownButton.frame = CGRectMake(horizontalPadding,
                                                      3.0f,
-                                                     CGRectGetWidth(self.bounds)- 3*buttonSize -2*horizontalPadding- 15.0f,
+                                                     CGRectGetWidth(self.bounds)- 2*buttonSize -2*horizontalPadding- 10.0f,
                                                      buttonSize);
+            }
             _messageInputTextView.backgroundColor = [UIColor whiteColor];
             
             break;
         }
         case ZBMessageInputViewStyleDefault:
         {
-            self.holdDownButton.frame = CGRectMake(horizontalPadding + buttonSize +5.0f,4.5f,CGRectGetWidth(self.bounds)- 3*buttonSize -2*horizontalPadding- 15.0f,buttonSize);
+            if([ChatKeyboardData sharedChatKeyboardData].isShowVoice){
+                self.holdDownButton.frame = CGRectMake(horizontalPadding + buttonSize +5.0f,4.5f,CGRectGetWidth(self.bounds)- 3*buttonSize -2*horizontalPadding- 15.0f,buttonSize);
+            }
+            else{
+                self.holdDownButton.frame = CGRectMake(horizontalPadding,4.5f,CGRectGetWidth(self.bounds)- 2*buttonSize -2*horizontalPadding- 10.0f,buttonSize);
+            }
             _messageInputTextView.backgroundColor = [UIColor clearColor];
             _messageInputTextView.layer.borderColor = [UIColor colorWithWhite:0.8f alpha:1.0f].CGColor;
             _messageInputTextView.layer.borderWidth = 0.65f;

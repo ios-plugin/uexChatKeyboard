@@ -130,6 +130,13 @@
     }
     
     
+    if ([xmlDic objectForKey:@"isShowVoice"] && [[xmlDic objectForKey:@"isShowVoice"]  isEqual: @(NO)]) {
+        chatKeyboardData.isShowVoice = NO;
+    }
+    else{
+        chatKeyboardData.isShowVoice = YES;
+    }
+    
     
 
     
