@@ -272,6 +272,15 @@
 
 }
 
+- (void)setText:(NSMutableArray *)inArguments{
+    ACArgsUnpack(NSString *text) = inArguments;
+    self.chatKeyboard.messageToolView.messageInputTextView.text = text;
+}
+
+- (NSString *)getText:(NSMutableArray *)inArguments{
+    return self.chatKeyboard.messageToolView.messageInputTextView.text;
+}
+
 -(void)close:(NSMutableArray *)inArguments {
     
     [self clean];
