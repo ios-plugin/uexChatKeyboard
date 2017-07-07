@@ -16,6 +16,8 @@
 #import "JSON.h"
 #import "ACPVoiceActionView.h"
 
+#define UEXChatKeyboard_LOCALIZEDSTRING(...) [EUtility uexPlugin:@"uexChatKeyboard" localizedString:__VA_ARGS__,nil]
+
 typedef NS_ENUM(NSInteger,ZBMessageViewState) {
     ZBMessageViewStateShowFace,
     ZBMessageViewStateShowShare,

@@ -697,9 +697,15 @@
     }
 }
 
--(void)willCancelRecordingVoiceAction{
+- (void)willCancelRecordingVoiceAction {
+    
     //UIImage * image = [UIImage imageNamed:@"uexChatKeyboard/voiceResource/touchDragOutside"];
-    UIImage * image = [UIImage imageWithContentsOfFile:[UEX_PLUGIN_BUNDLE pathForResource:@"voiceResource/touchDragOutside@2x" ofType:@"png"]];
+    
+    NSString *imagePath = [NSString stringWithFormat:@"voiceResource/%@",UEXChatKeyboard_LOCALIZEDSTRING(@"touchDragOutsideName")];
+    
+    
+    UIImage * image = [UIImage imageWithContentsOfFile:[UEX_PLUGIN_BUNDLE pathForResource:imagePath ofType:@"png"]];
+    
     if ([ChatKeyboardData sharedChatKeyboardData].dragOutsideImg) {
         UIImage * tempImg = [UIImage imageWithContentsOfFile:[ChatKeyboardData sharedChatKeyboardData].dragOutsideImg];
         if (tempImg) {
@@ -710,8 +716,13 @@
 }
 
 -(void)stopCancelRecordingVoiceAction{
+    
     //UIImage * image = [UIImage imageNamed:@"uexChatKeyboard/voiceResource/touchdown"];
-    UIImage * image = [UIImage imageWithContentsOfFile:[UEX_PLUGIN_BUNDLE pathForResource:@"voiceResource/touchdown@2x" ofType:@"png"]];
+
+    NSString *imagePath = [NSString stringWithFormat:@"voiceResource/%@",UEXChatKeyboard_LOCALIZEDSTRING(@"touchdownName")];
+
+    UIImage * image = [UIImage imageWithContentsOfFile:[UEX_PLUGIN_BUNDLE pathForResource:imagePath ofType:@"png"]];
+    
     if ([ChatKeyboardData sharedChatKeyboardData].touchDownImg) {
         UIImage * tempImg = [UIImage imageWithContentsOfFile:[ChatKeyboardData sharedChatKeyboardData].touchDownImg];
         if (tempImg) {

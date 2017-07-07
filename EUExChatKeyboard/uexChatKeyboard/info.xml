@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
-    <plugin uexName="uexChatKeyboard" version="3.0.30" build="30">
-        <info>30:修复复制多行到输入框导致的显示问题</info>
+    <plugin uexName="uexChatKeyboard" version="3.0.31.2" build="31.2">
+        <info>31.2:支持国际化调用</info>
+        <build>31.1:添加国际化文件</build>
+        <build>31:按钮增加国际化支持</build>
+        <build>30:修复复制多行到输入框导致的显示问题</build>
         <build>29:修复 在 热点、录音、VOIP情况下的frame错乱问题</build>
         <build>28: 添加onAt监听</build>
         <build>27: IDE证书更新</build>

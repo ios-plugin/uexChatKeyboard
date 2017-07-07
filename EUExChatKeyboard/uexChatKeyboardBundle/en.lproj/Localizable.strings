@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  EUExChatKeyboard
+
+  Created by liguofu on 2017/7/5.
+  Copyright © 2017年 com.zywx. All rights reserved.
+*/
+"touchDragOutsideName" ="touchDragOutsideE@2x";
+"touchdownName" ="touchdownE@2x";
+"recorderNormalTitle" = "Hold to Talk";
+"recorderHighlightedTitle" = "Release to Finish";
+"sendTitle" = "Send";
