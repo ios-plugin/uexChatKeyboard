@@ -15,9 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
 @class EBrowserView;
 void PluginLog(NSString *format, ...);
 @interface EUtility : NSObject {
@@ -30,6 +30,10 @@ void PluginLog(NSString *format, ...);
 + (CGRect)brwViewFrame:(EBrowserView*)inBrwView;
 + (NSURL*)brwViewUrl:(EBrowserView*)inBrwView;
 + (void)brwView:(EBrowserView*)inBrwView addSubview:(UIView*)inSubView;
+//2015-5-6
++ (void)brwView:(EBrowserView*)inBrwView addSubviewToScrollView:(UIView*)inSubView;
++ (void)brwView:(EBrowserView*)inBrwView addSubviewToContainer:(UIView*)inSubView WithIndex:(NSInteger)index andIndentifier:(NSString *)identifier;
+
 + (void)brwView:(EBrowserView*)inBrwView evaluateScript:(NSString*)inScript;
 + (void)brwView:(EBrowserView*)inBrwView presentModalViewController:(UIViewController *)modalViewController animated:(BOOL)animated;
 + (BOOL)isIpad;
@@ -68,5 +72,7 @@ void PluginLog(NSString *format, ...);
 +(NSString*)md5SoftToken;
 +(void)setRootViewGestureRecognizerEnabled:(BOOL)isEnable;
 
+
 +(NSBundle *)bundleForPlugin:(NSString *)pluginName;
++(NSString *)uexPlugin:(NSString *)pluginName localizedString:(NSString *)key,...;
 @end

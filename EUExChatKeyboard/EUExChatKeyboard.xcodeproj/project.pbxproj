@@ -29,6 +29,7 @@
 		420041B51BABE994000A57F5 /* messageBubbleResource in Resources */ = {isa = PBXBuildFile; fileRef = 420041B21BABE994000A57F5 /* messageBubbleResource */; };
 		420041B61BABE994000A57F5 /* messageInputViewResource in Resources */ = {isa = PBXBuildFile; fileRef = 420041B31BABE994000A57F5 /* messageInputViewResource */; };
 		420041B71BABE994000A57F5 /* voiceResource in Resources */ = {isa = PBXBuildFile; fileRef = 420041B41BABE994000A57F5 /* voiceResource */; };
+		F71365701F0CE70000FE84E2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F71365721F0CE70000FE84E2 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,8 @@
 		420041B31BABE994000A57F5 /* messageInputViewResource */ = {isa = PBXFileReference; lastKnownFileType = folder; path = messageInputViewResource; sourceTree = "<group>"; };
 		420041B41BABE994000A57F5 /* voiceResource */ = {isa = PBXFileReference; lastKnownFileType = folder; path = voiceResource; sourceTree = "<group>"; };
 		420041CB1BABF363000A57F5 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		F71365711F0CE70000FE84E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		F71365731F0CE74800FE84E2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +275,7 @@
 				420041B21BABE994000A57F5 /* messageBubbleResource */,
 				420041B31BABE994000A57F5 /* messageInputViewResource */,
 				420041B41BABE994000A57F5 /* voiceResource */,
+				F71365721F0CE70000FE84E2 /* Localizable.strings */,
 			);
 			path = uexChatKeyboardBundle;
 			sourceTree = "<group>";
@@ -336,6 +340,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 3C5A1C1C1A3A8BE400F237F6;
 			productRefGroup = 3C5A1C261A3A8BE400F237F6 /* Products */;
@@ -354,6 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				420041B61BABE994000A57F5 /* messageInputViewResource in Resources */,
+				F71365701F0CE70000FE84E2 /* Localizable.strings in Resources */,
 				420041B71BABE994000A57F5 /* voiceResource in Resources */,
 				420041B51BABE994000A57F5 /* messageBubbleResource in Resources */,
 			);
@@ -405,11 +411,24 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		F71365721F0CE70000FE84E2 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F71365711F0CE70000FE84E2 /* en */,
+				F71365731F0CE74800FE84E2 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		3C5A1C371A3A8BE400F237F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -451,6 +470,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

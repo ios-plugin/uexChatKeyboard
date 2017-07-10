@@ -10,6 +10,8 @@
 #import "ChatKeyboardData.h"
 #import "EUtility.h"
 
+#define UEXChatKeyboard_LOCALIZEDSTRING(...) [EUtility uexPlugin:@"uexChatKeyboard" localizedString:__VA_ARGS__,nil]
+
 @implementation ACPVoiceActionView
 
 /*
@@ -28,7 +30,10 @@
         
         _second = 0;
         
-        UIImage * voiceImg = [UIImage imageWithContentsOfFile:[[EUtility bundleForPlugin:@"uexChatKeyboard"] pathForResource:@"voiceResource/touchdown@2x" ofType:@"png"]];
+        NSString *imagePath = [NSString stringWithFormat:@"voiceResource/%@",UEXChatKeyboard_LOCALIZEDSTRING(@"touchdownName")];
+
+        UIImage * voiceImg = [UIImage imageWithContentsOfFile:[[EUtility bundleForPlugin:@"uexChatKeyboard"] pathForResource:imagePath ofType:@"png"]];
+        
         if ([ChatKeyboardData sharedChatKeyboardData].touchDownImg) {
             UIImage * tempImg = [UIImage imageWithContentsOfFile:[ChatKeyboardData sharedChatKeyboardData].touchDownImg];
             if (tempImg) {

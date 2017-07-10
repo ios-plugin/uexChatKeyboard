@@ -11,6 +11,7 @@
 #import "XMLReader.h"
 #import "ChatKeyboardData.h"
 
+
 @interface EUExChatKeyboard()<UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) ChatKeyboard *chatKeyboard;
@@ -184,7 +185,9 @@
         NSString *sendBtnbgColorDownStr = [chatKeyboardDataDict objectForKey:@"sendBtnbgColorDown"];
         sendBtnbgColorDown = [EUtility ColorFromString:sendBtnbgColorDownStr];
     }
-    NSString *sendBtnText = @"发送";
+    
+    NSString *sendBtnText = UEXChatKeyboard_LOCALIZEDSTRING(@"sendTitle");
+    
     if ([chatKeyboardDataDict objectForKey:@"sendBtnText"]) {
         sendBtnText = [NSString stringWithFormat:@"%@",[chatKeyboardDataDict objectForKey:@"sendBtnText"]];
     }
@@ -220,12 +223,15 @@
     if ([chatKeyboardDataDict objectForKey:@"selectorBtnImg"]) {
         chatKeyboardData.selectorBtnImg = [self absPath:[chatKeyboardDataDict objectForKey:@"selectorBtnImg"]];
     }
-    
-    chatKeyboardData.recorderNormalTitle = @"按住 说话";
+    //UEXChatKeyboard_LOCALIZEDSTRING(@"recorderHighlightedTitle");
+    chatKeyboardData.recorderNormalTitle = UEXChatKeyboard_LOCALIZEDSTRING(@"recorderNormalTitle");
+    //@"按住 说话";
     if ([chatKeyboardDataDict objectForKey:@"recorderNormalTitle"]) {
         chatKeyboardData.recorderNormalTitle = [NSString stringWithFormat:@"%@", [chatKeyboardDataDict objectForKey:@"recorderNormalTitle"]];
     }
-    chatKeyboardData.recorderHighlightedTitle = @"松开 结束";
+    //@"松开 结束"
+    chatKeyboardData.recorderHighlightedTitle = UEXChatKeyboard_LOCALIZEDSTRING(@"recorderHighlightedTitle");
+    
     if ([chatKeyboardDataDict objectForKey:@"recorderHighlightedTitle"]) {
         chatKeyboardData.recorderHighlightedTitle = [NSString stringWithFormat:@"%@", [chatKeyboardDataDict objectForKey:@"recorderHighlightedTitle"]];
     }
@@ -259,9 +265,25 @@
         chatKeyboardData.shareViewBgColor = [EUtility ColorFromString:[chatKeyboardDataDict objectForKey:@"shareViewBgColor"]];
     }
     
+}
+
+- (NSString*)localizedString:(NSString *)key,...{
     
+    NSString *defaultValue=@"";
+    va_list argList;
+    va_start(argList,key);
+    id arg=va_arg(argList,id);
+    //if(arg && [arg isKindOfClass:[NSString class]]){
+    if(arg){
+        defaultValue=arg;
+    }
+    va_end(argList);
+    
+    
+    return [EUtility uexPlugin:@"uexChatKeyboard" localizedString:key,defaultValue];
     
 }
+
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     

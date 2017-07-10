@@ -11,6 +11,8 @@
 #import "EUExBaseDefine.h"
 #import "EUtility.h"
 
+#define UEXChatKeyboard_LOCALIZEDSTRING(...) [EUtility uexPlugin:@"uexChatKeyboard" localizedString:__VA_ARGS__,nil]
+
 @interface EUExChatKeyboard : EUExBase
 
 
