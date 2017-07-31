@@ -84,6 +84,12 @@ typedef enum
 
 @interface ZBMessageInputView : UIImageView
 
+{
+    //录音开始和结束按钮触发时间记录
+    NSDate              *_recorderStartDate;
+    NSDate              *_recorderEndDate;
+}
+
 @property (nonatomic,weak) id<ZBMessageInputViewDelegate> delegate;
 
 /**
