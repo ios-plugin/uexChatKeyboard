@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger,ZBMessageViewState) {
 
 @interface ChatKeyboard : NSObject<ZBMessageInputViewDelegate,ZBMessageShareMenuViewDelegate,ZBMessageManagerFaceViewDelegate,ACPVoiceActionViewDelegate>
 
+
+
 @property (nonatomic, weak) EUExChatKeyboard *uexObj;
 
 @property (nonatomic,strong) ZBMessageInputView *messageToolView;

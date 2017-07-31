@@ -735,6 +735,9 @@
 -(void)didTimeOut{
     NSDictionary * cbDic = [NSDictionary dictionaryWithObjectsAndKeys:@"2",@"status",@"2",@"voicePath", nil];
     NSString *jsStr = [NSString stringWithFormat:@"if(uexChatKeyboard.onVoiceAction!=null){uexChatKeyboard.onVoiceAction(\'%@\');}", [cbDic JSONFragment]];
+    
+    NSLog(@"AppCan3.0==>>uexChatKeyboard==>>onVoiceAction==>> status=2 ");
+    
     [self.uexObj.meBrwView stringByEvaluatingJavaScriptFromString:jsStr];
     [self removeViewAndSubviewsFromSuperview:_v];
     _v.delegate = nil;
@@ -747,11 +750,13 @@
  *  按下录音按钮开始录音
  */
 - (void)didStartRecordingVoiceAction{
-
+    
     NSDictionary * cbDic = [NSDictionary dictionaryWithObjectsAndKeys:@"0",@"status",@"0",@"voicePath", nil];
     NSString *jsStr = [NSString stringWithFormat:@"if(uexChatKeyboard.onVoiceAction!=null){uexChatKeyboard.onVoiceAction(\'%@\');}", [cbDic JSONFragment]];
-    [self.uexObj.meBrwView stringByEvaluatingJavaScriptFromString:jsStr];
     
+    NSLog(@"AppCan3.0==>>uexChatKeyboard==>>onVoiceAction==>> status=0 ");
+    
+    [self.uexObj.meBrwView stringByEvaluatingJavaScriptFromString:jsStr];
     _v = [[ACPVoiceActionView alloc]initWithFrame:CGRectMake(0, 0, UEX_SCREENWIDTH, UEX_SCREENHEIGHT-_inputViewHeight)];
     _v.delegate = self;
     [EUtility brwView:self.uexObj.meBrwView addSubview:_v];
@@ -764,10 +769,11 @@
  */
 - (void)didCancelRecordingVoiceAction{
     
-
-    
     NSDictionary * cbDic = [NSDictionary dictionaryWithObjectsAndKeys:@"-1",@"status",@"-1",@"voicePath", nil];
     NSString *jsStr = [NSString stringWithFormat:@"if(uexChatKeyboard.onVoiceAction!=null){uexChatKeyboard.onVoiceAction(\'%@\');}", [cbDic JSONFragment]];
+    
+    NSLog(@"AppCan3.0==>>uexChatKeyboard==>>onVoiceAction==>> status=-1 ");
+    
     [self.uexObj.meBrwView stringByEvaluatingJavaScriptFromString:jsStr];
     
     [self removeViewAndSubviewsFromSuperview:_v];
@@ -778,8 +784,12 @@
  *  松开手指完成录音
  */
 - (void)didFinishRecoingVoiceAction{
+    
     NSDictionary * cbDic = [NSDictionary dictionaryWithObjectsAndKeys:@"1",@"status",@"1",@"voicePath", nil];
     NSString *jsStr = [NSString stringWithFormat:@"if(uexChatKeyboard.onVoiceAction!=null){uexChatKeyboard.onVoiceAction(\'%@\');}", [cbDic JSONFragment]];
+    
+    NSLog(@"AppCan3.0==>>uexChatKeyboard==>>onVoiceAction==>> status=1 ");
+    
     [self.uexObj.meBrwView stringByEvaluatingJavaScriptFromString:jsStr];
     [self removeViewAndSubviewsFromSuperview:_v];
     _v.delegate = nil;

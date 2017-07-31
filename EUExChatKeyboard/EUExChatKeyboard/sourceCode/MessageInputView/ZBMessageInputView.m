@@ -162,30 +162,52 @@
 
 #pragma mark -语音功能
 - (void)holdDownButtonTouchDown {
+    
+    _recorderStartDate = [NSDate date];
+    NSTimeInterval timeHere = 0.5;
+    if ([_recorderStartDate timeIntervalSinceDate:_recorderEndDate] < timeHere && _recorderEndDate) {
+        
+        self.holdDownButton.selected = NO;
+        
+        return;
+    }
+    
     if ([self.delegate respondsToSelector:@selector(didStartRecordingVoiceAction)]) {
         [self.delegate didStartRecordingVoiceAction];
     }
 }
 
 - (void)holdDownButtonTouchUpOutside {
+    
+    _recorderEndDate = [NSDate date];
+    
     if ([self.delegate respondsToSelector:@selector(didCancelRecordingVoiceAction)]) {
         [self.delegate didCancelRecordingVoiceAction];
     }
 }
 
 - (void)holdDownButtonTouchUpInside {
+    
+    _recorderEndDate = [NSDate date];
+    
     if ([self.delegate respondsToSelector:@selector(didFinishRecoingVoiceAction)]) {
         [self.delegate didFinishRecoingVoiceAction];
     }
 }
 
 - (void)holdDownButtonTouchDragOutside {
+    
+    _recorderEndDate = [NSDate date];
+    
     if ([self.delegate respondsToSelector:@selector(willCancelRecordingVoiceAction)]) {
         [self.delegate willCancelRecordingVoiceAction];
     }
 }
 
 - (void)holdDownButtonTouchDragInside {
+    
+    _recorderEndDate = [NSDate date];
+    
     if ([self.delegate respondsToSelector:@selector(stopCancelRecordingVoiceAction)]) {
         [self.delegate stopCancelRecordingVoiceAction];
     }

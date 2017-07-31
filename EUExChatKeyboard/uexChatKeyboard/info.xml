@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
-    <plugin uexName="uexChatKeyboard" version="3.0.31.2" build="31.2">
-        <info>31.2:支持国际化调用</info>
+    <plugin uexName="uexChatKeyboard" version="3.0.31.3" build="31.3">
+        <info>31.3:添加录音按钮点击间隔</info>
+        <build>31.2:支持国际化调用</build>
         <build>31.1:添加国际化文件</build>
         <build>31:按钮增加国际化支持</build>
         <build>30:修复复制多行到输入框导致的显示问题</build>
