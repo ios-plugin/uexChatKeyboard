@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
-    <plugin uexName="uexChatKeyboard" version="3.0.31.3" build="31.3">
-        <info>31.3:添加录音按钮点击间隔</info>
+    <plugin uexName="uexChatKeyboard" version="3.0.31.4" build="31.4">
+        <info>31.4:添加通过关键字插入内容方法insertTextByKeyword和onInputKeyword监听方法</info>
+        <build>31.3:添加录音按钮点击间隔</build>
         <build>31.2:支持国际化调用</build>
         <build>31.1:添加国际化文件</build>
         <build>31:按钮增加国际化支持</build>

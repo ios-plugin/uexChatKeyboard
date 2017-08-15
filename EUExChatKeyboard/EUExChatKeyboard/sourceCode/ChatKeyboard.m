@@ -496,8 +496,8 @@
 //        _isInit = NO;
 //    }
     
+    [self inputTextViewCheckKeywords:messageInputTextView];
     [self inputTextViewCheckOnAt:messageInputTextView];
-    
     
     if (!self.previousTextViewContentHeight)
     {
@@ -576,8 +576,6 @@
 
 
 #pragma mark - onAt
-
-
 - (void)inputTextViewCheckOnAt:(ZBMessageTextView *)messageInputTextView{
     self.atPosition = NSNotFound;
     NSString *lastChangeText = self.lastChangeText;
@@ -795,8 +793,70 @@
     _v.delegate = nil;
 }
 
+#pragma mark - 通过关键字插入内容
+- (void)insertString:(NSString *)str afterKeyword:(NSString *)keyword isReplacingKeyword:(BOOL)isReplacingKeyword{
+    if (self.atPosition == NSNotFound || !str || str.length == 0 || !keyword || keyword.length == 0) {
+        return;
+    }
+    UITextView *textView = self.messageToolView.messageInputTextView;
+    
+    NSString *text = textView.text;
+    NSMutableString *subString = [[text substringToIndex:self.atPosition] mutableCopy];
+    if (![subString hasSuffix:keyword]) {
+        NSLog(@"insert string failed; keyword invalid");
+        return;
+    }
+    NSInteger lengthChange = 0;
+    if (isReplacingKeyword) {
+        [subString deleteCharactersInRange:NSMakeRange(subString.length - keyword.length, keyword.length)];
+        lengthChange -= keyword.length;
+    }
+    [subString appendString:str];
+    lengthChange += str.length;
+    
+    NSRange range = textView.selectedRange;
+    NSRange newRange = NSMakeRange(range.location + lengthChange, range.length);
+    NSString *newString = [subString stringByAppendingString:[text substringFromIndex:self.atPosition]];
+    [textView setText:newString];
+    [textView setSelectedRange:newRange];
+}
 
-
+#pragma mark - Keyword Observer
+- (void)inputTextViewCheckKeywords:(ZBMessageTextView *)messageInputTextView{
+    self.atPosition = NSNotFound;
+    NSString *lastChangeText = self.lastChangeText;
+    NSString *currentText = messageInputTextView.text;
+    self.lastChangeText = currentText;
+    if (currentText.length <= lastChangeText.length) {
+        return;
+    }
+    NSRange range = messageInputTextView.selectedRange;
+    if (range.location == NSNotFound || range.location == 0) {
+        return;
+    }
+    for (NSString * keyword in self.keywords){
+        if (![keyword isKindOfClass:[NSString class]]) {
+            continue;
+        }
+        NSUInteger length = keyword.length;
+        if (range.location < length) {
+            continue;
+        }
+        NSString *suffixString = [currentText substringWithRange:NSMakeRange(range.location - length, length)];
+        if ([suffixString isEqualToString:keyword]) {
+            
+            self.atPosition = range.location;
+            
+//            [self.uexObj.webViewEngine callbackWithFunctionKeyPath:@"uexChatKeyboard.onInputKeyword" arguments:ACArgsPack(@{@"keyword": keyword})];
+            
+            NSDictionary *resultDic = [NSDictionary dictionaryWithObjectsAndKeys:keyword,@"keyword", nil];
+            NSString *jsStr = [NSString stringWithFormat:@"if(uexChatKeyboard.onInputKeyword != null){uexChatKeyboard.onInputKeyword(%@);}",[resultDic JSONFragment]];
+            [self.uexObj.meBrwView stringByEvaluatingJavaScriptFromString:jsStr];
+            
+            return;
+        }
+    }
+}
 
 
 @end
