@@ -497,7 +497,7 @@
 //    }
     
     [self inputTextViewCheckKeywords:messageInputTextView];
-    [self inputTextViewCheckOnAt:messageInputTextView];
+    //[self inputTextViewCheckOnAt:messageInputTextView];
     
     if (!self.previousTextViewContentHeight)
     {
@@ -795,12 +795,19 @@
 
 #pragma mark - 通过关键字插入内容
 - (void)insertString:(NSString *)str afterKeyword:(NSString *)keyword isReplacingKeyword:(BOOL)isReplacingKeyword{
+    
+    //NSLog(@"AppCan --> uexChatKeyboard --> ChatKeyboard.m --> 通过关键字插入内容 --> str=%@ ,keyword=%@ ,isReplacingKeyword=%d",str,keyword,isReplacingKeyword);
+    
     if (self.atPosition == NSNotFound || !str || str.length == 0 || !keyword || keyword.length == 0) {
         return;
     }
+    
     UITextView *textView = self.messageToolView.messageInputTextView;
     
     NSString *text = textView.text;
+    
+    //NSLog(@"AppCan --> uexChatKeyboard --> ChatKeyboard.m --> 通过关键字插入内容 --> str=%@ ,keyword=%@ ,isReplacingKeyword=%d ,text=%@",str,keyword,isReplacingKeyword,text);
+    
     NSMutableString *subString = [[text substringToIndex:self.atPosition] mutableCopy];
     if (![subString hasSuffix:keyword]) {
         NSLog(@"insert string failed; keyword invalid");

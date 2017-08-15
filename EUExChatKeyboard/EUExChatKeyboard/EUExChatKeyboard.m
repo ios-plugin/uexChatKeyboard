@@ -415,6 +415,8 @@
 #pragma mark - 通过关键字插入内容
 - (void)insertTextByKeyword:(NSMutableArray *)inArguments{
     
+    NSLog(@"AppCan --> uexChatKeyboard --> insertTextByKeyword --> inArguments = %@",inArguments);
+    
     if([inArguments count] < 1){
         return;
     }
