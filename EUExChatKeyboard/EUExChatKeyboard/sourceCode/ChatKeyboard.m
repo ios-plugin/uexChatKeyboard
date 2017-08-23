@@ -65,6 +65,7 @@
 @interface ChatKeyboard()
 @property (nonatomic,strong)NSString *lastChangeText;
 @property (nonatomic,assign)NSInteger atPosition;
+@property (nonatomic,assign)NSInteger keywordPosition;
 
 @end
 
@@ -497,7 +498,7 @@
 //    }
     
     [self inputTextViewCheckKeywords:messageInputTextView];
-    //[self inputTextViewCheckOnAt:messageInputTextView];
+    [self inputTextViewCheckOnAt:messageInputTextView];
     
     if (!self.previousTextViewContentHeight)
     {
@@ -798,7 +799,7 @@
     
     //NSLog(@"AppCan --> uexChatKeyboard --> ChatKeyboard.m --> 通过关键字插入内容 --> str=%@ ,keyword=%@ ,isReplacingKeyword=%d",str,keyword,isReplacingKeyword);
     
-    if (self.atPosition == NSNotFound || !str || str.length == 0 || !keyword || keyword.length == 0) {
+    if (self.keywordPosition == NSNotFound || !str || str.length == 0 || !keyword || keyword.length == 0) {
         return;
     }
     
@@ -808,7 +809,7 @@
     
     //NSLog(@"AppCan --> uexChatKeyboard --> ChatKeyboard.m --> 通过关键字插入内容 --> str=%@ ,keyword=%@ ,isReplacingKeyword=%d ,text=%@",str,keyword,isReplacingKeyword,text);
     
-    NSMutableString *subString = [[text substringToIndex:self.atPosition] mutableCopy];
+    NSMutableString *subString = [[text substringToIndex:self.keywordPosition] mutableCopy];
     if (![subString hasSuffix:keyword]) {
         NSLog(@"insert string failed; keyword invalid");
         return;
@@ -823,14 +824,14 @@
     
     NSRange range = textView.selectedRange;
     NSRange newRange = NSMakeRange(range.location + lengthChange, range.length);
-    NSString *newString = [subString stringByAppendingString:[text substringFromIndex:self.atPosition]];
+    NSString *newString = [subString stringByAppendingString:[text substringFromIndex:self.keywordPosition]];
     [textView setText:newString];
     [textView setSelectedRange:newRange];
 }
 
 #pragma mark - Keyword Observer
 - (void)inputTextViewCheckKeywords:(ZBMessageTextView *)messageInputTextView{
-    self.atPosition = NSNotFound;
+    self.keywordPosition = NSNotFound;
     NSString *lastChangeText = self.lastChangeText;
     NSString *currentText = messageInputTextView.text;
     self.lastChangeText = currentText;
@@ -852,7 +853,7 @@
         NSString *suffixString = [currentText substringWithRange:NSMakeRange(range.location - length, length)];
         if ([suffixString isEqualToString:keyword]) {
             
-            self.atPosition = range.location;
+            self.keywordPosition = range.location;
             
 //            [self.uexObj.webViewEngine callbackWithFunctionKeyPath:@"uexChatKeyboard.onInputKeyword" arguments:ACArgsPack(@{@"keyword": keyword})];
             
