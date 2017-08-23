@@ -68,6 +68,8 @@
 
 - (void)open:(NSMutableArray *)array {
     
+    NSLog(@"AppCan --> uexChatKeyboard --> open --> inArguments = %@",array);
+    
     if ([array count] < 1) {
         return;
     }
@@ -86,6 +88,10 @@
         _chatKeyboard = [[ChatKeyboard alloc]initWithUexobj:self];
         if([chatKeyboardDataDict objectForKey:@"bottom"]) {
             _chatKeyboard.bottomOffset=[[chatKeyboardDataDict objectForKey:@"bottom"] floatValue];
+        }
+        id keywords = chatKeyboardDataDict[@"keywords"];
+        if (keywords && [keywords isKindOfClass:[NSArray class]]) {
+            _chatKeyboard.keywords = keywords;
         }
         
         [_chatKeyboard open];
@@ -405,5 +411,41 @@
     [self.chatKeyboard insertAfterAt:str];
 
 }
+
+#pragma mark - 通过关键字插入内容
+- (void)insertTextByKeyword:(NSMutableArray *)inArguments{
+    
+    NSLog(@"AppCan --> uexChatKeyboard --> insertTextByKeyword --> inArguments = %@",inArguments);
+    
+    if([inArguments count] < 1){
+        return;
+    }
+    
+    NSDictionary *info = [inArguments[0] JSONValue];
+    
+    if (!([info isKindOfClass:[NSDictionary class]] || [info isKindOfClass:[NSMutableDictionary class]])) {
+        return;
+    }
+    
+    if (info[@"keyword"] == nil || info[@"insertText"] == nil || info[@"isReplaceKeyword"] == nil) {
+        return;
+    }
+    
+    NSString * keyword = [NSString stringWithFormat:@"%@",info[@"keyword"]];
+    NSString * insertText = [NSString stringWithFormat:@"%@",info[@"insertText"]];
+    NSNumber * isReplaceKeywordFlag = info[@"isReplaceKeyword"];
+    if (![isReplaceKeywordFlag isKindOfClass:[NSNumber class]]) {
+        isReplaceKeywordFlag = [[NSNumber alloc] initWithInt:[info[@"isReplaceKeyword"] intValue]];
+    }
+    
+    BOOL isReplaceKeyword = isReplaceKeywordFlag ? isReplaceKeywordFlag.integerValue == 1 : NO;
+    
+    [self.chatKeyboard insertString:insertText afterKeyword:keyword isReplacingKeyword:isReplaceKeyword];
+}
+
+
+
+
+
 
 @end
