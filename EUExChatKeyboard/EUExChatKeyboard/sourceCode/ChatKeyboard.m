@@ -67,6 +67,8 @@
 @property (nonatomic,assign)NSInteger atPosition;
 @property (nonatomic,assign)NSInteger keywordPosition;
 
+@property (nonatomic,strong)NSString *lastOneWord;//记录上次编辑时的最后一个字符
+
 @end
 
 @implementation ChatKeyboard
@@ -489,7 +491,7 @@
 }
 
 
-
+#pragma mark - 弃用onAt相关API
 - (void)inputTextViewDidChange:(ZBMessageTextView *)messageInputTextView
 {
 //    if (_isInit) {
@@ -498,7 +500,7 @@
 //    }
     
     [self inputTextViewCheckKeywords:messageInputTextView];
-    [self inputTextViewCheckOnAt:messageInputTextView];
+    //[self inputTextViewCheckOnAt:messageInputTextView];  -------弃用onAt相关API--------
     
     if (!self.previousTextViewContentHeight)
     {
@@ -575,40 +577,41 @@
 //    [messageInputTextView resignFirstResponder];
 }
 
-
+#pragma mark - 弃用onAt相关API
 #pragma mark - onAt
 - (void)inputTextViewCheckOnAt:(ZBMessageTextView *)messageInputTextView{
-    self.atPosition = NSNotFound;
-    NSString *lastChangeText = self.lastChangeText;
-    NSString *currentText = messageInputTextView.text;
-    self.lastChangeText = currentText;
-    if (currentText.length <= lastChangeText.length) {
-        return;
-    }
-    NSRange range = messageInputTextView.selectedRange;
-    if (range.location == NSNotFound || range.location == 0) {
-        return;
-    }
-    
-    NSString *lastChar = [currentText substringWithRange:NSMakeRange(range.location - 1, 1)];
-    if ([lastChar isEqual:@"@"]) {
-        self.atPosition = range.location;
-        [EUtility brwView:self.uexObj.meBrwView evaluateScript:@"if(uexChatKeyboard.onAt){uexChatKeyboard.onAt();}"];
-    }
+//    self.atPosition = NSNotFound;
+//    NSString *lastChangeText = self.lastChangeText;
+//    NSString *currentText = messageInputTextView.text;
+//    self.lastChangeText = currentText;
+//    if (currentText.length <= lastChangeText.length) {
+//        return;
+//    }
+//    NSRange range = messageInputTextView.selectedRange;
+//    if (range.location == NSNotFound || range.location == 0) {
+//        return;
+//    }
+//    
+//    NSString *lastChar = [currentText substringWithRange:NSMakeRange(range.location - 1, 1)];
+//    if ([lastChar isEqual:@"@"]) {
+//        self.atPosition = range.location;
+//        [EUtility brwView:self.uexObj.meBrwView evaluateScript:@"if(uexChatKeyboard.onAt){uexChatKeyboard.onAt();}"];
+//    }
 }
 
+#pragma mark - 弃用onAt相关API
 - (void)insertAfterAt:(NSString *)str{
-    if (self.atPosition == NSNotFound || !str || str.length == 0) {
-        return;
-    }
-    UITextView *textView = self.messageToolView.messageInputTextView;
-    
-    NSMutableString *text = [textView.text mutableCopy];
-    NSRange range = textView.selectedRange;
-    NSRange newRange = NSMakeRange(range.location + str.length, range.length);
-    [text insertString:str atIndex:self.atPosition];
-    [textView setText:text];
-    [textView setSelectedRange:newRange];
+//    if (self.atPosition == NSNotFound || !str || str.length == 0) {
+//        return;
+//    }
+//    UITextView *textView = self.messageToolView.messageInputTextView;
+//    
+//    NSMutableString *text = [textView.text mutableCopy];
+//    NSRange range = textView.selectedRange;
+//    NSRange newRange = NSMakeRange(range.location + str.length, range.length);
+//    [text insertString:str atIndex:self.atPosition];
+//    [textView setText:text];
+//    [textView setSelectedRange:newRange];
 }
 
 
@@ -831,17 +834,28 @@
 
 #pragma mark - Keyword Observer
 - (void)inputTextViewCheckKeywords:(ZBMessageTextView *)messageInputTextView{
-    self.keywordPosition = NSNotFound;
+    
     NSString *lastChangeText = self.lastChangeText;
     NSString *currentText = messageInputTextView.text;
     self.lastChangeText = currentText;
-    if (currentText.length <= lastChangeText.length) {
+    
+    if (currentText.length < lastChangeText.length) {
         return;
     }
+    
     NSRange range = messageInputTextView.selectedRange;
     if (range.location == NSNotFound || range.location == 0) {
         return;
     }
+    
+    NSString *oneWordNow = [currentText substringWithRange:NSMakeRange(range.location - 1, 1)];
+    if (currentText.length == lastChangeText.length && [self.lastOneWord isEqualToString:oneWordNow]) {
+        return;
+    }
+    self.lastOneWord = oneWordNow;
+    
+    self.keywordPosition = NSNotFound;
+    
     for (NSString * keyword in self.keywords){
         if (![keyword isKindOfClass:[NSString class]]) {
             continue;
