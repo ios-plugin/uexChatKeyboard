@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
-    <plugin uexName="uexChatKeyboard" version="3.0.31.6" build="31.6">
-        <info>31.6:恢复onAt监听，解决onAt和onInputKeyword逻辑冲突的问题</info>
+    <plugin uexName="uexChatKeyboard" version="3.0.32" build="32">
+        <info>32:修复非全键盘关键字监听失效的问题，弃用onAt和insertAfterAt方法</info>
+        <build>31.6:恢复onAt监听，解决onAt和onInputKeyword逻辑冲突的问题</build>
         <build>31.5:移除onAt监听</build>
         <build>31.4:添加通过关键字插入内容方法insertTextByKeyword和onInputKeyword监听方法</build>
         <build>31.3:添加录音按钮点击间隔</build>
